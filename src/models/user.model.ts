@@ -1,4 +1,4 @@
-import { Schema, model, models, Document } from 'mongoose';
+import { Schema, model, models, Document, Model } from 'mongoose';
 
 export interface UserAttributes {
   email: string;
@@ -80,13 +80,14 @@ const UserSchema = new Schema<UserDocument>(
     timestamps: true,
     toJSON: {
       transform: (_doc, ret) => {
-        ret.id = ret._id.toString();
-        delete ret._id;
-        delete ret.__v;
-        delete ret.password;
-        delete ret.passwordResetToken;
-        delete ret.passwordResetExpires;
-        return ret;
+        const retObj = ret as Record<string, unknown> & { [key: string]: any };
+        retObj.id = retObj._id?.toString();
+        delete retObj._id;
+        delete retObj.__v;
+        delete retObj.password;
+        delete retObj.passwordResetToken;
+        delete retObj.passwordResetExpires;
+        return retObj;
       },
     },
   }
@@ -95,5 +96,6 @@ const UserSchema = new Schema<UserDocument>(
 UserSchema.index({ email: 1 });
 UserSchema.index({ userName: 1 });
 
-export const User = models.User || model<UserDocument>('User', UserSchema);
+export const User: Model<UserDocument> =
+  (models.User as Model<UserDocument>) || model<UserDocument>('User', UserSchema);
 

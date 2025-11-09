@@ -21,5 +21,7 @@ router.post('/reset-password', validate(resetPasswordValidation), authController
 
 router.get('/profile', authenticate, authController.getProfile.bind(authController));
 
+router.post('/logout', authenticate, authController.logout.bind(authController));
+
 export default router;
 

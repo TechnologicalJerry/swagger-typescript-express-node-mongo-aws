@@ -26,14 +26,19 @@ export class ProductController {
 
       const { name, description, price, stock, imageUrl } = req.body;
 
-      const product = await productService.createProduct({
+      const productData: any = {
         name,
         description,
         price: parsePositiveNumber(price, 0),
-        stock: stock !== undefined ? parseNonNegativeInteger(stock, 0) : undefined,
         imageUrl,
         userId: req.user.userId,
-      });
+      };
+
+      if (stock !== undefined) {
+        productData.stock = parseNonNegativeInteger(stock, 0);
+      }
+
+      const product = await productService.createProduct(productData);
 
       sendSuccess(res, product.toJSON(), 'Product created successfully', 201);
     } catch (error) {
@@ -45,6 +50,11 @@ export class ProductController {
   async getProductById(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const { id } = req.params;
+
+      if (!id) {
+        sendError(res, 'Product ID is required', 400);
+        return;
+      }
 
       const product = await productService.getProductById(id);
       if (!product) {
@@ -90,17 +100,23 @@ export class ProductController {
       }
 
       const { id } = req.params;
+      if (!id) {
+        sendError(res, 'Product ID is required', 400);
+        return;
+      }
+
       const { name, description, price, stock, imageUrl } = req.body;
+
+      const updateData: any = {};
+      if (name !== undefined) updateData.name = name;
+      if (description !== undefined) updateData.description = description;
+      if (price !== undefined) updateData.price = parsePositiveNumber(price, 0);
+      if (stock !== undefined) updateData.stock = parseNonNegativeInteger(stock, 0);
+      if (imageUrl !== undefined) updateData.imageUrl = imageUrl;
 
       const product = await productService.updateProduct(
         id,
-        {
-          name,
-          description,
-          price: price !== undefined ? parsePositiveNumber(price, 0) : undefined,
-          stock: stock !== undefined ? parseNonNegativeInteger(stock, 0) : undefined,
-          imageUrl,
-        },
+        updateData,
         req.user.userId
       );
 
@@ -119,6 +135,10 @@ export class ProductController {
       }
 
       const { id } = req.params;
+      if (!id) {
+        sendError(res, 'Product ID is required', 400);
+        return;
+      }
 
       await productService.deleteProduct(id, req.user.userId);
       sendSuccess(res, null, 'Product deleted successfully');

@@ -17,13 +17,14 @@ export class AuthController {
           return;
         }
 
-        req.session.userId = user.id;
-        req.session.email = user.email;
-        req.session.user = {
+        const session = req.session as any;
+        session.userId = user.id;
+        session.email = user.email;
+        session.user = {
           id: user.id,
           email: user.email,
         };
-        req.session.status = 'logged_in';
+        session.status = 'logged_in';
 
         req.session.save((saveError) => {
           if (saveError) {
@@ -43,10 +44,11 @@ export class AuthController {
         return;
       }
 
-      delete req.session.user;
-      delete req.session.userId;
-      delete req.session.email;
-      req.session.status = 'logged_out';
+      const session = req.session as any;
+      delete session.user;
+      delete session.userId;
+      delete session.email;
+      session.status = 'logged_out';
 
       req.session.save((saveError) => {
         if (saveError) {

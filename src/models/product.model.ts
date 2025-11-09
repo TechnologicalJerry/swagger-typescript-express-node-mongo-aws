@@ -1,4 +1,4 @@
-import { Schema, model, models, Document, Types } from 'mongoose';
+import { Schema, model, models, Document, Types, Model } from 'mongoose';
 
 export interface ProductAttributes {
   name: string;
@@ -13,6 +13,8 @@ export interface ProductDocument extends ProductAttributes, Document {
   createdAt: Date;
   updatedAt: Date;
 }
+
+interface ProductModel extends Model<ProductDocument> {}
 
 const ProductSchema = new Schema<ProductDocument>(
   {
@@ -49,8 +51,8 @@ const ProductSchema = new Schema<ProductDocument>(
   {
     timestamps: true,
     toJSON: {
-      transform: (_doc, ret) => {
-        ret.id = ret._id.toString();
+      transform: (_doc, ret: any) => {
+        ret.id = ret._id?.toString();
         delete ret._id;
         delete ret.__v;
         return ret;
@@ -62,5 +64,5 @@ const ProductSchema = new Schema<ProductDocument>(
 ProductSchema.index({ name: 'text', description: 'text' });
 ProductSchema.index({ user: 1, createdAt: -1 });
 
-export const Product = models.Product || model<ProductDocument>('Product', ProductSchema);
+export const Product = (models.Product as ProductModel) || model<ProductDocument, ProductModel>('Product', ProductSchema);
 

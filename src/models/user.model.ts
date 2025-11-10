@@ -93,10 +93,6 @@ const UserSchema = new Schema<UserDocument>(
   }
 );
 
-// Remove duplicate indexes since unique: true already creates indexes
-// UserSchema.index({ email: 1 }); // Removed - duplicate of unique: true
-// UserSchema.index({ userName: 1 }); // Removed - duplicate of unique: true
-
 export const User: Model<UserDocument> =
   (models.User as Model<UserDocument>) || model<UserDocument>('User', UserSchema);
 

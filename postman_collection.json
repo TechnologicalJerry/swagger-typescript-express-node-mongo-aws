@@ -92,8 +92,8 @@
                   "});",
                   "const json = pm.response.json();",
                   "if (json && json.data) {",
-                  "    if (json.data.user && json.data.user._id) {",
-                  "        pm.collectionVariables.set('userId', json.data.user._id);",
+                  "    if (json.data.user && json.data.user.id) {",
+                  "        pm.collectionVariables.set('userId', json.data.user.id);",
                   "    }",
                   "    if (json.data.token) {",
                   "        pm.collectionVariables.set('authToken', json.data.token);",
@@ -142,8 +142,8 @@
                   "});",
                   "const json = pm.response.json();",
                   "if (json && json.data) {",
-                  "    if (json.data.user && json.data.user._id) {",
-                  "        pm.collectionVariables.set('userId', json.data.user._id);",
+                  "    if (json.data.user && json.data.user.id) {",
+                  "        pm.collectionVariables.set('userId', json.data.user.id);",
                   "    }",
                   "    if (json.data.token) {",
                   "        pm.collectionVariables.set('authToken', json.data.token);",
@@ -271,6 +271,44 @@
                 "api",
                 "auth",
                 "profile"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Logout",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Logout succeeded', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.collectionVariables.set('authToken', '');"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/logout",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "logout"
               ]
             }
           },

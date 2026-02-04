@@ -7,13 +7,14 @@ export class UserController {
   async getUserById(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const { id } = req.params;
+      const idStr = Array.isArray(id) ? id[0] : id;
 
-      if (!id) {
+      if (!idStr) {
         sendError(res, 'User ID is required', 400);
         return;
       }
 
-      const user = await userService.getUserById(id);
+      const user = await userService.getUserById(idStr);
       if (!user) {
         sendError(res, 'User not found', 404);
         return;

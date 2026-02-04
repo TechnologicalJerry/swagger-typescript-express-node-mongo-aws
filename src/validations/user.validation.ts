@@ -42,8 +42,12 @@ export const updateUserValidation = [
   body('phone')
     .optional()
     .trim()
-    .matches(/^[+]?[(]?[0-9]{1,4}[)]?[-\s.]?[(]?[0-9]{1,4}[)]?[-\s.]?[0-9]{1,9}$/)
-    .withMessage('Please provide a valid phone number'),
+    .matches(
+      /^[+]?[(]?[0-9]{1,4}[)]?[-\s.]?[(]?[0-9]{1,6}[)]?[-\s.]?[0-9]{1,10}$/
+    )
+    .withMessage(
+      'Please provide a valid phone number. Accepted formats: +91-9876543210, +919876543210, +91-98765-43210, +1-555-0100, (555) 123-4567, 555.123.4567 (digits with optional +, parentheses, and separators - . or space)'
+    ),
 ];
 
 export const getUserValidation = [

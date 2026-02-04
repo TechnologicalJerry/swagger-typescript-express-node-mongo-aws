@@ -50,13 +50,14 @@ export class ProductController {
   async getProductById(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const { id } = req.params;
+      const idStr = Array.isArray(id) ? id[0] : id;
 
-      if (!id) {
+      if (!idStr) {
         sendError(res, 'Product ID is required', 400);
         return;
       }
 
-      const product = await productService.getProductById(id);
+      const product = await productService.getProductById(idStr);
       if (!product) {
         sendError(res, 'Product not found', 404);
         return;
@@ -100,7 +101,8 @@ export class ProductController {
       }
 
       const { id } = req.params;
-      if (!id) {
+      const idStr = Array.isArray(id) ? id[0] : id;
+      if (!idStr) {
         sendError(res, 'Product ID is required', 400);
         return;
       }
@@ -115,7 +117,7 @@ export class ProductController {
       if (imageUrl !== undefined) updateData.imageUrl = imageUrl;
 
       const product = await productService.updateProduct(
-        id,
+        idStr,
         updateData,
         req.user.userId
       );
@@ -135,12 +137,13 @@ export class ProductController {
       }
 
       const { id } = req.params;
-      if (!id) {
+      const idStr = Array.isArray(id) ? id[0] : id;
+      if (!idStr) {
         sendError(res, 'Product ID is required', 400);
         return;
       }
 
-      await productService.deleteProduct(id, req.user.userId);
+      await productService.deleteProduct(idStr, req.user.userId);
       sendSuccess(res, null, 'Product deleted successfully');
     } catch (error) {
       logger.error('Delete product error', error);

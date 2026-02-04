@@ -1,14 +1,14 @@
 {
   "info": {
     "_postman_id": "8c1d7d3d-4b2d-45d8-a2af-bcfc7d432c4f",
-    "name": "Swagger Express Node MMongo AWS",
+    "name": "Swagger TypeScript Express Node Mongo AWS",
     "description": "Postman collection covering the Swagger Express Node Mongo AWS API.\n\nIt includes requests for health checks, authentication, user management, and product management routes exposed under `/api`. Run the requests in the suggested order (Health → Auth → Users → Products) so that variables like `authToken`, `userId`, and `productId` are captured automatically from earlier responses.",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "variable": [
     {
       "key": "baseUrl",
-      "value": "http://localhost:3000",
+      "value": "http://localhost:5050",
       "type": "string"
     },
     {
@@ -409,8 +409,8 @@
                   "    pm.response.to.have.status(201);",
                   "});",
                   "const json = pm.response.json();",
-                  "if (json && json.data && json.data._id) {",
-                  "    pm.collectionVariables.set('productId', json.data._id);",
+                  "if (json && json.data && json.data.id) {",
+                  "    pm.collectionVariables.set('productId', json.data.id);",
                   "}"
                 ]
               }
@@ -458,7 +458,7 @@
                   "});",
                   "const json = pm.response.json();",
                   "if (json && json.data && Array.isArray(json.data.products) && json.data.products.length > 0) {",
-                  "    pm.collectionVariables.set('productId', json.data.products[0]._id);",
+                  "    pm.collectionVariables.set('productId', json.data.products[0].id);",
                   "}"
                 ]
               }

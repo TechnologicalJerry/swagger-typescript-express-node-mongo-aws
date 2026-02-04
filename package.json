@@ -24,13 +24,13 @@
     "cloud",
     "fullstack"
   ],
-  "homepage": "https://github.com/TechnologicalJerry/swagger-express-node-mongo-aws#readme",
+  "homepage": "https://github.com/TechnologicalJerry/swagger-typescript-express-node-mongo-aws#readme",
   "bugs": {
-    "url": "https://github.com/TechnologicalJerry/swagger-express-node-mongo-aws/issues"
+    "url": "https://github.com/TechnologicalJerry/swagger-typescript-express-node-mongo-aws/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/TechnologicalJerry/swagger-express-node-mongo-aws.git"
+    "url": "git+https://github.com/TechnologicalJerry/swagger-typescript-express-node-mongo-aws.git"
   },
   "license": "MIT",
   "author": "technojerry",
@@ -46,29 +46,29 @@
   "dependencies": {
     "bcryptjs": "^3.0.3",
     "connect-mongo": "^5.1.0",
-    "cors": "^2.8.5",
+    "cors": "^2.8.6",
     "dotenv": "^17.2.3",
-    "express": "^5.1.0",
-    "express-session": "^1.18.2",
-    "express-validator": "^7.3.0",
+    "express": "^5.2.1",
+    "express-session": "^1.19.0",
+    "express-validator": "^7.3.1",
     "helmet": "^8.1.0",
-    "jsonwebtoken": "^9.0.2",
-    "mongodb": "^6.20.0",
-    "mongoose": "^8.19.3",
+    "jsonwebtoken": "^9.0.3",
+    "mongodb": "^6.21.0",
+    "mongoose": "^8.22.0",
     "morgan": "^1.10.1",
     "swagger-ui-express": "^5.0.1"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",
     "@types/cors": "^2.8.19",
-    "@types/express": "^5.0.5",
+    "@types/express": "^5.0.6",
     "@types/express-session": "^1.18.2",
     "@types/jsonwebtoken": "^9.0.10",
     "@types/mongoose": "^5.11.96",
     "@types/morgan": "^1.9.10",
-    "@types/node": "^24.10.0",
+    "@types/node": "^24.10.10",
     "@types/swagger-ui-express": "^4.1.8",
-    "nodemon": "^3.1.10",
+    "nodemon": "^3.1.11",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.3"
   }
